@@ -1,2 +1,1 @@
-# Files
-Archivos subidos mediante AdonixBox.
+> For AdonixBox
