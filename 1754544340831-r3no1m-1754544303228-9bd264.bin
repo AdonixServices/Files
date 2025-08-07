@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bienvenid@ :]</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #32CD32;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .typewriter h1 {
+      overflow: hidden;
+      border-right: 0.15em solid #000;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 0.1em;
+      animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: black; }
+    }
+
+    .video-letrero {
+      margin-top: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .video-letrero video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #222;
+    }
+
+    .servidores-container {
+      margin-top: 60px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #f0f0f0;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.2);
+      text-align: left;
+      color: #222;
+    }
+
+    .servidor-item {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .servidor-item:last-child {
+      border-bottom: none;
+    }
+
+    .servidor-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+
+    .boton-descarga {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .boton-descarga:hover {
+      background-color: #45a049;
+    }
+
+    /* Animación manos y botón */
+    .boton-animado {
+      padding: 16px 32px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      animation: pulse 1.2s infinite;
+      margin-bottom: 25px;
+    }
+
+    .mano {
+      font-size: 24px;
+      animation: saltar 0.8s infinite;
+    }
+
+    @keyframes saltar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Estilos popup bloqueo */
+    #bloqueo-total {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000000f0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    /* Estilos ruleta */
+    .ruleta-container {
+      margin: 40px auto;
+    }
+    .ruleta {
+      width: 200px;
+      height: 200px;
+      border: 10px solid #fff;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      background: conic-gradient(
+        #4CAF50 0deg 24deg,
+        #8BC34A 24deg 48deg,
+        #CDDC39 48deg 72deg,
+        #FFEB3B 72deg 96deg,
+        #FFC107 96deg 120deg,
+        #FF9800 120deg 144deg,
+        #FF5722 144deg 168deg,
+        #F44336 168deg 192deg,
+        #E91E63 192deg 216deg,
+        #9C27B0 216deg 240deg,
+        #673AB7 240deg 264deg,
+        #3F51B5 264deg 288deg,
+        #2196F3 288deg 312deg,
+        #03A9F4 312deg 336deg,
+        #00BCD4 336deg 360deg
+      );
+      transition: transform 3s ease-out;
+      box-shadow: 0 0 10px #222 inset;
+    }
+    .girar-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .mensaje-ganador, .selector-servidor, #btn-ir {
+      display: none;
+      margin-top: 20px;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    #btn-ir {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- POPUP BLOQUEADOR -->
+  <div id="bloqueo-total">
+    <h2 style="font-size:24px;margin-bottom:10px;">📢 Aviso automático</h2>
+    <p style="font-size:18px; max-width: 400px; margin-bottom: 20px; line-height:1.4;">
+      Este mensaje se eliminará en <span id="contador">59</span> segundos.<br />
+      Es un aviso por el creador de la página.<br />
+      Puedes visitar la nueva página cuando gustes.
+    </p>
+
+    <!-- Botón con manos animadas -->
+    <button id="ir-link" onclick="abrirNuevaPagina()" class="boton-animado">
+      <span class="mano">👉</span>
+      <strong>IR A LA PÁGINA</strong>
+      <span class="mano">👈</span>
+    </button>
+  </div>
+
+  <div class="typewriter">
+    <h1>Bienvenid@ :]</h1>
+  </div>
+
+  <!-- RULETA -->
+  <div class="ruleta-container">
+    <div id="ruleta" class="ruleta"></div>
+    <button class="girar-btn" onclick="girarRuleta()">GIRAR RULETA</button>
+  </div>
+
+  <div id="mensaje" class="mensaje-ganador">
+    <h2>🎁 ¡Felicidades! Has ganado un servidor 100% funcional.</h2>
+  </div>
+
+  <div id="selector" class="selector-servidor">
+    <label for="servidores">Selecciona tu servidor preferido:</label><br>
+    <select id="servidores">
+      <option>1. Virgin Mobile sin saldo IP 🇲🇽</option>
+      <option>2. RediCoppel sin saldo IP 🇲🇽</option>
+      <option>3. Telcel regiones caídas con RDS (modo avión) 🇲🇽</option>
+      <option>4. Telcel IP 🇲🇽</option>
+      <option>5. RediCoppel IP MX 🇲🇽</option>
+      <option>6. OXXO Cel congela y RDS IP 🇲🇽</option>
+      <option>7. OXXO Cel sin saldo IP 🇲🇽</option>
+      <option>8. Multicompañía sin saldo IP 🇲🇽</option>
+      <option>9. Multicompañía RDS IP 🇲🇽</option>
+      <option>10. Movistar sin saldo IP 🇲🇽</option>
+      <option>11. Movistar RDS IP 🇲🇽</option>
+      <option>12. Movistar 🥶 y RDS vs Telcel sin saldo 🇲🇽</option>
+      <option>13. AT&T / Unefon 🥶 y RDS IP 🇲🇽</option>
+      <option>14. AT&T / Unefon congela y RDS IP 🇲🇽</option>
+      <option>15. Altan RDS sin saldo IP 🇲🇽</option>
+    </select><br>
+    <button id="btn-ir" onclick="redirigir()">🚀 Obtener Servidor</button>
+  </div>
+
+  <div class="video-letrero">
+    <video controls>
+      <source src="https://files.catbox.moe/dvcbob.mp4" type="video/mp4" />
+      Tu navegador no soporta la etiqueta de video.
+    </video>
+  </div>
+
+  <div class="video-letrero">
+    <video controls>
+      <source src="https://raw.githubusercontent.com/IrokzDal/uploads/main/1750303195444.mp4" type="video/mp4" />
+      Tu navegador no soporta la etiqueta de video.
+    </video>
+  </div>
+
+  <div class="video-letrero">
+    <video controls>
+      <source src="https://raw.githubusercontent.com/IrokzDal/uploads/main/1750303207610.mp4" type="video/mp4" />
+      Tu navegador no soporta la etiqueta de video.
+    </video>
+  </div>
+
+  <div class="servidores-container">
+    <h2>🛡️ Servidores para todas las compañías</h2>
+    <p style="color: red; font-weight: bold; font-size: 1em; margin-top: -10px;">
+      ⚠️ Los servidores expiran cada 24 horas. Vuelve en 24 horas para obtener el nuevo archivo.
+    </p>
+
+    <div class="servidor-item">
+      <div class="servidor-title">1. Virgin Mobile sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/456v9apemb457fh/virgin_mobile_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+      
+    <div class="servidor-item">
+      <div class="servidor-title">2. RediCoppel sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/t5ppeq5mblj219y/redicopel_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">3. Telcel regiones caídas con RDS (modo avión) 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/xq7ed3dp1g0bd8x/telcel_regiones_caídas_rds_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">4. Telcel IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/233kk3147byhw32/telcel_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">5. RediCoppel IP MX 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/18v6uu2ijskvp92/redicopel_ip_mx_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">6. OXXO Cel congela y RDS IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/v79tv2ce20474gx/oxxo_cel_rds_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">7. OXXO Cel sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/b4nr2bshfert8v4/oxxo_cel_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">8. Multicompañía sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/273iwqeloz48nj8/multicompañía_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">9. Multicompañía RDS IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/7kuc4nd662j47c8/multicompañía_rds_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">10. Movistar sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/l9cg8q2rvo1ru8z/movistar_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">11. Movistar RDS IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/hn3tdnghq1za8t0/movistar_rds_ip_mexico_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">12. Movistar 🥶 y RDS vs Telcel sin saldo 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/uwykjij2kjasc4y/movistar_rds_vs_telcel_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">13. AT&T / Unefon 🥶 y RDS IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/jnau3t5kjjgpfy7/att_unefon_rds_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">14. AT&T / Unefon congela y RDS IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/3xkc23kszgxp0v5/att_unefon_congela_rds_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+
+    <div class="servidor-item">
+      <div class="servidor-title">15. Altan RDS sin saldo IP 🇲🇽</div>
+      <a href="https://www.mediafire.com/file/n4fpjq66aa8p2ol/altan_rds_sin_saldo_ip_🇲🇽.hc/file" target="_blank" class="boton-descarga">Descargar</a>
+    </div>
+  </div>
+
+  <script>
+    // Popup countdown
+    let tiempo = 59;
+    let bloqueo = document.getElementById('bloqueo-total');
+    let contador = document.getElementById('contador');
+
+    let intervalo = setInterval(() => {
+      if(tiempo > 0){
+        contador.textContent = tiempo;
+        tiempo--;
+      } else {
+        clearInterval(intervalo);
+        bloqueo.style.display = 'none';
+      }
+    }, 1000);
+
+    function abrirNuevaPagina() {
+      window.open("https://otieu.com/4/9492399", "_blank");
+    }
+
+    // Ruleta
+    function girarRuleta() {
+      const ruleta = document.getElementById("ruleta");
+      const grados = 3600 + Math.floor(Math.random() * 360);
+      ruleta.style.transition = 'transform
